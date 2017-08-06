@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.sunilsamuel.brms.rules</groupId>
+	<artifactId>BRMS-Rules-KJar</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>kjar</packaging>
+
+
+	<properties>
+		<kie.version>7.1.0.Final</kie.version>
+		<cucumber.version>1.2.5</cucumber.version>
+		<codehaus.jackson.version>1.9.13</codehaus.jackson.version>
+		<javaassist.version>3.19.0-GA</javaassist.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+	<organization>
+		<name>Sunil Samuel</name>
+	</organization>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-api</artifactId>
+			<version>${kie.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+			<version>${kie.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+			<version>${kie.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.kie.server</groupId>
+			<artifactId>kie-server-client</artifactId>
+			<version>${kie.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>${javaassist.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>${codehaus.jackson.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-maven-plugin</artifactId>
+				<version>${kie.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+		<!-- This pluginManagement is used to fix the following Eclipse error: -->
+		<!-- Plugin execution not covered by lifecycle configuration: org.kie:kie-maven-plugin:xxx.Final:build 
+			(execution: default-build, phase: compile) -->
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.kie</groupId>
+										<artifactId>kie-maven-plugin</artifactId>
+										<versionRange>[6.0.0,)</versionRange>
+										<goals>
+											<goal>build</goal>
+											<goal>compile</goal>
+											<goal>injectreactive</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

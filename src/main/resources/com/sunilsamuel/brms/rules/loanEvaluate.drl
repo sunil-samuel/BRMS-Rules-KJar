@@ -1,0 +1,99 @@
+package com.sunilsamuel.brms.rules;
+
+import java.util.List;
+
+import com.sunilsamuel.brms.model.UserInformation;
+import com.sunilsamuel.brms.model.LoanAmount;
+import com.sunilsamuel.brms.model.CollegeStatus;
+
+/******************************************************************************
+ * loanEvaluate.drl
+ * Description:
+ *     A sample BRMS rule that will look at the User information to determine
+ *     if the user has met the criteria to qualify for a loan.  If the 
+ *     person qualifies, then update the LoanAmount with the amount that the
+ *     user is able to loan.
+ * Written By: Sunil Samuel
+ * Create Date: 2017-07-04
+ * Story: 1065
+ ******************************************************************************/
+
+/* ############################################################################
+ *                                   R U L E S
+ * ########################################################################## */
+/******************************************************************************
+ * Criteria: #0
+ *    Default to the user is not eligible for a loan
+ ******************************************************************************/
+rule "Create the Initial Loan Ineligibility"
+salience 100
+when
+	$user : UserInformation()
+then
+	insert (new LoanAmount ($user.getIdentifier(), 0d, false));
+end
+
+/******************************************************************************
+ * Criteria: #1
+ *   1. The user is 18 or over years old
+ *   2. The user is a full-time student
+ *   3. The user family income is less than $45,000
+ *   THEN : Loan Amount = 5000
+ ******************************************************************************/
+rule "Determine Eligibility for a Full Time 18 or Over"
+when
+	$user : UserInformation (
+		age >= 18, collegeStatus == CollegeStatus.FullTime, familyIncome <= 45000
+	)
+	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
+then
+	$loanAmount.setLoanAmount(5000d);
+	$loanAmount.setEligible(true);
+end
+
+/******************************************************************************
+ * Criteria: #2
+ *   1. The user is less than 18 years old
+ *   2. The user is a full-time student
+ *   3. The user family income is less than $45,000
+ *   THEN : Loan Amount = 8000
+ ******************************************************************************/
+rule "Determine Eligibility for a Full Time 17 or Less"
+when
+	$user : UserInformation (
+		age < 18, collegeStatus == CollegeStatus.FullTime, familyIncome <= 45000
+	)
+	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
+then
+	$loanAmount.setLoanAmount(8000d);
+	$loanAmount.setEligible(true);
+end
+
+/******************************************************************************
+ * Criteria: #3
+ *   1. The user is 18 or over years old
+ *   2. The user is a part-time student
+ *   3. The user family income is less than $55,000
+ *   THEN : Loan Amount = 3000
+ ******************************************************************************/
+rule "Determine Eligibility for a Part Time 18 or Over"
+when
+	$user : UserInformation (
+		age >= 18, collegeStatus == CollegeStatus.PartTime, familyIncome <= 55000
+	)
+	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
+then
+	$loanAmount.setLoanAmount(3000d);
+	$loanAmount.setEligible(true);
+end
+
+/* ############################################################################
+ *                                   Q U E R Y
+ * ########################################################################## */
+/******************************************************************************
+ * The query will allow the kie-server to gather all of the LoanAmount
+ * objects that were created by the rules.
+ ******************************************************************************/
+query "Query LoanAmount"
+	loanAmount : List() from collect(LoanAmount())
+end

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<configuration>
+		<property key="drools.propertySpecific" value="ALWAYS" />
+		<!-- <property key="drools.dump.dir" value="/tmp/brms/classes" /> -->
+	</configuration>
+
+	<kbase name="defaultKieBase" default="true" packages="com.sunilsamuel.brms.rules">
+		<ksession name="defaultStatelessKieSession" type="stateless"
+			default="true" />
+	</kbase>
+</kmodule>
