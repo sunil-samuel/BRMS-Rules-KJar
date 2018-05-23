@@ -1,4 +1,4 @@
-package com.sunilsamuel.brms.rules.ignore;
+package ignore;
 
 import java.util.List;
 

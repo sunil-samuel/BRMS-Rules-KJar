@@ -44,7 +44,7 @@ end
 rule "Determine Eligibility for a Full Time 18 or Over"
 when
 	$user : UserInformation (
-		age >= 18, collegeStatus == CollegeStatus.FullTime, familyIncome <= 45000
+		age >= 18, collegeStatus == CollegeStatus.FullTime, familyIncome < 45000
 	)
 	not StateInformation ($user.state == state)
 	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
@@ -63,7 +63,7 @@ end
 rule "Determine Eligibility for a Full Time 17 or Less"
 when
 	$user : UserInformation (
-		age < 18, collegeStatus == CollegeStatus.FullTime, familyIncome <= 45000
+		age < 18, collegeStatus == CollegeStatus.FullTime, familyIncome < 45000
 	)
 	not StateInformation ($user.state == state)
 	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
@@ -82,7 +82,7 @@ end
 rule "Determine Eligibility for a Part Time 18 or Over"
 when
 	$user : UserInformation (
-		age >= 18, collegeStatus == CollegeStatus.PartTime, familyIncome <= 55000
+		age >= 18, collegeStatus == CollegeStatus.PartTime, familyIncome < 55000
 	)
 	//
 	// If there is a StateInformation object within the ksession, then the state
