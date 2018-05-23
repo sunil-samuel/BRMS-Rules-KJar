@@ -87,6 +87,52 @@ query "Query LoanAmount"
 	loanAmount : List() from collect(LoanAmount())
 end
 ```
+## Next Steps
+
+If you are up to it, there are a sample set of test cases that you could create rule to make them pass.  There is a file named `stateLoanEvaluate.drl`, that has a set of rules
+to create.  In order to test the Test Driven Development (TDD), uncomment the `StateInformation.feature` file by removing the `@Ignore`  tag from the test cases.
+Now, run `maven test` and you will see some of the tests failing.  This is because you have not written the rules yet. 
+
+Go to the `stateLoanEvaluate.drl` file and create the BRMS rules as defined.  There will be four rules you will create.  Take a look at the model objects
+to figure this out.  If you need some help, there is a completely working rules files inside brms->answer named `stateLoanEvaluateAnswer.drl`.  Try not to look 
+at that file unless if you have to.
+
+```
+ *  RULE 1
+ *  GIVEN the user is from MD and is one of the first N users to apply in order
+ *        where N is the total number of loans available
+ *  AND age >= 18
+ *  AND collegeStatus == PartTime
+ *  AND familyIncome <=80000
+ *  THEN eligible for $10000 loan
+```
+```
+ *  RULE 2
+ *  GIVEN the user is from MD and is one of the first N users to apply in order
+ *        where N is the total number of loans available
+ *  AND age >= 18
+ *  AND collegeStatus == FullTime
+ *  AND familyIncome <=60000
+ *  THEN eligible for $15000 loan
+```
+```
+ *  RULE 3
+ *  GIVEN the user is from MD and is one of the first N users to apply in order
+ *        where N is the total number of loans available
+ *  AND age < 18
+ *  AND collegeStatus == FullTime
+ *  AND familyIncome <=60000
+ *  THEN eligible for $20000 loan
+```
+```
+ *  RULE 4
+ *  GIVEN the user is from MD and is one of the first N users to apply in order
+ *        where N is the total number of loans available
+ *  AND age < 18
+ *  AND collegeStatus == PartTime
+ *  AND familyIncome <=50000
+ *  THEN eligible for $5000 loan
+```
 
 ## Kie-Server Request
 
