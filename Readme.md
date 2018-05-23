@@ -42,33 +42,40 @@ mvn clean install
 
 This is a very simple application that uses the following rule to determine the loan amount for a person.  This application can be extended to be more realistic and more robust.
 
+There are two types of rules we want to create.  The first one is already created for you.  The second set of rules is something that you should develop on your own.  The first set of rules assign eligible loan amount to a person as long as they are not in a set of special states that
+follow a different set of rules (this is what you will be developing).
+
 ```
 Criteria 1
- 1. The user is 18 or over years old
- 2. The user is a full-time student
- 3. The user family income is less than $45,000
+ 1. The user is not in a state with special state rules
+ 2. The user is 18 or over years old
+ 3. The user is a full-time student
+ 4. The user family income is less than $45,000
  THEN : Loan Amount = 5000
 ```
 
 ```
 Criteria: 2
-1. The user is less than 18 years old
-2. The user is a full-time student
-3. The user family income is less than $45,000
+1. The user is not in a state with special state rules
+2. The user is less than 18 years old
+3. The user is a full-time student
+4. The user family income is less than $45,000
 THEN : Loan Amount = 8000
 ```
 
 ```
 Criteria: 3
-1. The user is 18 or over years old
-2. The user is a part-time student
-3. The user family income is less than $55,000
+1. The user is not in a state with special state rules
+2. The user is 18 or over years old
+3. The user is a part-time student
+4. The user family income is less than $55,000
 THEN : Loan Amount = 3000
 ```
 
 ```
 Criteria: 4
-Otherwise, the person is not eligible for a loan
+1. Otherwise, the user is not in a state with special state rules
+2. the person is not eligible for a loan
 ```
 
 ## Query

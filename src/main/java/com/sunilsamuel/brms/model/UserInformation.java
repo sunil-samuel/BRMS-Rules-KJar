@@ -13,9 +13,11 @@ public class UserInformation implements Serializable {
 	private String firstName;
 	private String lastName;
 	private Long identifier;
+	private String state;
 	private Integer age;
 	private CollegeStatus collegeStatus;
 	private Double familyIncome;
+	private int order;
 
 	/**
 	 * @return the firstName
@@ -63,6 +65,21 @@ public class UserInformation implements Serializable {
 	}
 
 	/**
+	 * @return the state
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * @param state
+	 *            the state to set
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	/**
 	 * @return the age
 	 */
 	public Integer getAge() {
@@ -107,6 +124,21 @@ public class UserInformation implements Serializable {
 		this.familyIncome = familyIncome;
 	}
 
+	/**
+	 * @return the order
+	 */
+	public int getOrder() {
+		return order;
+	}
+
+	/**
+	 * @param order
+	 *            the order to set
+	 */
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -122,6 +154,8 @@ public class UserInformation implements Serializable {
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((identifier == null) ? 0 : identifier.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + order;
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		return result;
 	}
 
@@ -166,6 +200,13 @@ public class UserInformation implements Serializable {
 				return false;
 		} else if (!lastName.equals(other.lastName))
 			return false;
+		if (order != other.order)
+			return false;
+		if (state == null) {
+			if (other.state != null)
+				return false;
+		} else if (!state.equals(other.state))
+			return false;
 		return true;
 	}
 
@@ -178,8 +219,10 @@ public class UserInformation implements Serializable {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("UserInformation [firstName=").append(firstName).append(", lastName=").append(lastName)
-				.append(", identifier=").append(identifier).append(", age=").append(age).append(", collegeStatus=")
-				.append(collegeStatus).append(", familyIncome=").append(familyIncome).append("]");
+				.append(", identifier=").append(identifier).append(", state=").append(state).append(", age=")
+				.append(age).append(", collegeStatus=").append(collegeStatus).append(", familyIncome=")
+				.append(familyIncome).append(", order=").append(order).append("]");
 		return builder.toString();
 	}
+
 }

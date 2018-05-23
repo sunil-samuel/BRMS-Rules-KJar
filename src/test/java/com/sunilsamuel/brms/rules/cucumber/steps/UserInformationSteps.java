@@ -18,7 +18,6 @@ public class UserInformationSteps {
 
 	public UserInformationSteps() {
 		userInformation = new UserInformation();
-		loanAmount = new LoanAmount();
 		rulesEngineSupport = new RulesEngine();
 	}
 

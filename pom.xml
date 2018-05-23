@@ -8,7 +8,7 @@
 
 
 	<properties>
-		<kie.version>7.1.0.Final</kie.version>
+		<kie.version>6.4.0.Final-redhat-8</kie.version>
 		<cucumber.version>1.2.5</cucumber.version>
 		<codehaus.jackson.version>1.9.13</codehaus.jackson.version>
 		<javaassist.version>3.19.0-GA</javaassist.version>

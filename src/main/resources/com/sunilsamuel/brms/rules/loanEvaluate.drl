@@ -5,6 +5,7 @@ import java.util.List;
 import com.sunilsamuel.brms.model.UserInformation;
 import com.sunilsamuel.brms.model.LoanAmount;
 import com.sunilsamuel.brms.model.CollegeStatus;
+import com.sunilsamuel.brms.model.StateInformation;
 
 /******************************************************************************
  * loanEvaluate.drl
@@ -12,7 +13,7 @@ import com.sunilsamuel.brms.model.CollegeStatus;
  *     A sample BRMS rule that will look at the User information to determine
  *     if the user has met the criteria to qualify for a loan.  If the 
  *     person qualifies, then update the LoanAmount with the amount that the
- *     user is able to loan.
+ *     user is able to loan.  We do not want to run these rules 
  * Written By: Sunil Samuel
  * Create Date: 2017-07-04
  * Story: 1065
@@ -45,9 +46,10 @@ when
 	$user : UserInformation (
 		age >= 18, collegeStatus == CollegeStatus.FullTime, familyIncome <= 45000
 	)
+	not StateInformation ($user.state == state)
 	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
 then
-	$loanAmount.setLoanAmount(5000d);
+	$loanAmount.setLoanAmount(5000.00);
 	$loanAmount.setEligible(true);
 end
 
@@ -63,9 +65,10 @@ when
 	$user : UserInformation (
 		age < 18, collegeStatus == CollegeStatus.FullTime, familyIncome <= 45000
 	)
+	not StateInformation ($user.state == state)
 	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
 then
-	$loanAmount.setLoanAmount(8000d);
+	$loanAmount.setLoanAmount(8000.00);
 	$loanAmount.setEligible(true);
 end
 
@@ -81,9 +84,14 @@ when
 	$user : UserInformation (
 		age >= 18, collegeStatus == CollegeStatus.PartTime, familyIncome <= 55000
 	)
+	//
+	// If there is a StateInformation object within the ksession, then the state
+	// field is non-null.
+	//
+	not StateInformation ($user.state == state)
 	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
 then
-	$loanAmount.setLoanAmount(3000d);
+	$loanAmount.setLoanAmount(3000.00);
 	$loanAmount.setEligible(true);
 end
 

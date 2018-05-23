@@ -1,0 +1,102 @@
+package com.sunilsamuel.brms.rules;
+
+import java.util.List;
+
+import com.sunilsamuel.brms.model.UserInformation;
+import com.sunilsamuel.brms.model.LoanAmount;
+import com.sunilsamuel.brms.model.CollegeStatus;
+import com.sunilsamuel.brms.model.StateInformation;
+
+/******************************************************************************
+ * These are rules that should be written as practice.  The test cases are
+ * set to @Ignore and therefore will not run by default.   Create the rules
+ * as defined below and then remove the @Ignore annotation from the 
+ * 'StateInformation.feature' file to test the rules that you created.
+ ******************************************************************************/
+
+/******************************************************************************
+ * MD Specific Loan Rules
+ * 
+ *  RULE 1
+ *  GIVEN the user is from MD and is one of the first N users to apply in order
+ *        where N is the total number of loans available
+ *  AND age >= 18
+ *  AND collegeStatus == PartTime
+ *  AND familyIncome <=80000
+ *  THEN eligible for $10000 loan
+ * 
+ *  RULE 2
+ *  GIVEN the user is from MD and is one of the first N users to apply in order
+ *        where N is the total number of loans available
+ *  AND age >= 18
+ *  AND collegeStatus == FullTime
+ *  AND familyIncome <=60000
+ *  THEN eligible for $15000 loan
+ *
+ *  RULE 3
+ *  GIVEN the user is from MD and is one of the first N users to apply in order
+ *        where N is the total number of loans available
+ *  AND age < 18
+ *  AND collegeStatus == FullTime
+ *  AND familyIncome <=60000
+ *  THEN eligible for $20000 loan
+ *
+ *  RULE 4
+ *  GIVEN the user is from MD and is one of the first N users to apply in order
+ *        where N is the total number of loans available
+ *  AND age < 18
+ *  AND collegeStatus == PartTime
+ *  AND familyIncome <=50000
+ *  THEN eligible for $5000 loan
+ ******************************************************************************/
+rule "MD :: Part Time for 18 or Over with less Income"
+when
+	$user : UserInformation (
+		age >= 18, collegeStatus == CollegeStatus.PartTime,
+		familyIncome <= 80000
+	)
+	$state : StateInformation ($user.state == state,$user.order <= totalLoans)
+	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
+then
+	$loanAmount.setLoanAmount(10000.00);
+	$loanAmount.setEligible(true);
+end
+
+rule "MD :: Full Time for 18 or Over with less Income"
+when
+	$user : UserInformation (
+		age >= 18, collegeStatus == CollegeStatus.FullTime,
+		familyIncome <= 60000
+	)
+	$state : StateInformation ($user.state == state,$user.order <= totalLoans)
+	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
+then
+	$loanAmount.setLoanAmount(15000.00);
+	$loanAmount.setEligible(true);
+end
+
+rule "MD :: Full Time for 18 or Less with less Income"
+when
+	$user : UserInformation (
+		age < 18, collegeStatus == CollegeStatus.FullTime,
+		familyIncome <= 60000
+	)
+	$state : StateInformation ($user.state == state,$user.order <= totalLoans)
+	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
+then
+	$loanAmount.setLoanAmount(20000.00);
+	$loanAmount.setEligible(true);
+end
+
+rule "MD :: Part Time for 18 or Less with Less Income"
+when
+	$user : UserInformation (
+		age < 18, collegeStatus == CollegeStatus.PartTime,
+		familyIncome <= 50000
+	)
+	$loanAmount : LoanAmount (userIdentifier == $user.identifier)
+	$state : StateInformation ($user.state == state,$user.order <= totalLoans)
+then
+	$loanAmount.setLoanAmount(5000.00);
+	$loanAmount.setEligible(true);
+end

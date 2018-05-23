@@ -11,4 +11,8 @@ public class RulesEngine extends RulesEngineSupport {
 		List<LoanAmount> loanAmounts = (List<LoanAmount>) get("loanAmount", LoanAmount.class);
 		return (loanAmounts == null || loanAmounts.size() == 0 ? null : loanAmounts.get(0));
 	}
+
+	public List<LoanAmount> getLoanAmounts() {
+		return (List<LoanAmount>) get("loanAmount", LoanAmount.class);
+	}
 }

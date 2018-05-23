@@ -13,7 +13,7 @@ import cucumber.api.junit.Cucumber;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/com/sunilsamuel/brms/rules/cucumber", glue = "com/sunilsamuel/brms/rules/cucumber/steps", plugin = {
-		"pretty" }, monochrome = true, tags = { "~@Ignore" })
+		"pretty" }, monochrome = true, tags = { "@StateInformation", "~@Ignore" })
 public class BrmsRulesTest {
 
 }

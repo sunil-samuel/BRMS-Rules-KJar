@@ -61,7 +61,31 @@ public class RulesEngineSupport {
 			commands.add(CommandFactory.newInsert(fact));
 		}
 		commands.add(CommandFactory.newEnableAuditLog(auditFileName));
+		fireRules();
+	}
+
+	public void fireRules() {
 		commands.add(CommandFactory.newFireAllRules());
+	}
+
+	/**
+	 * Insert one fact at a time and run the processes separately.
+	 * 
+	 * @param fact
+	 *            The objects to insert into the BRMS engine
+	 */
+	public void addFact(Object fact) {
+		commands.add(CommandFactory.newInsert(fact));
+	}
+
+	/**
+	 * Add the audit filename to write output to.
+	 * 
+	 * @param auditFileName
+	 *            Audit file name
+	 */
+	public void addAuditLog(String auditFileName) {
+		commands.add(CommandFactory.newEnableAuditLog(auditFileName));
 	}
 
 	/**
