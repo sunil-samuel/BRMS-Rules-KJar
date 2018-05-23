@@ -1,4 +1,5 @@
-@BRMS @StateInformation @Complete
+@BRMS @StateInformation @Complete @Ignore
+
 Feature: Validate Loan According to State Rules
   I want to use the state rules to assign loan amounts
   I can only assign the given number of loans for a given state
