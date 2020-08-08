@@ -1,0 +1,67 @@
+{
+	"lookup": "defaultStatelessKieSession",
+	"commands": [
+		{
+			"insert": {
+				"object": {
+					"com.sunilsamuel.brms.model.UserInformation": {
+						"firstName": "Sunil",
+						"lastName": "Samuel",
+						"identifier": 123,
+						"state": "MD",
+						"age": 14,
+						"collegeStatus": "FullTime",
+						"familyIncome": 42000
+					}
+				},
+				"return-object": false,
+				"disconnected": false
+			}
+		},
+		{
+			"insert": {
+				"object": {
+					"com.sunilsamuel.brms.model.UserInformation": {
+						"firstName": "Joel",
+						"lastName": "Samuel",
+						"identifier": 421231,
+						"state": "MD",
+						"age": 21,
+						"collegeStatus": "PartTime",
+						"familyIncome": 54043
+					}
+				},
+				"return-object": false,
+				"disconnected": false
+			}
+		},
+			{
+			"insert": {
+				"object": {
+					"com.sunilsamuel.brms.model.UserInformation": {
+						"firstName": "Jake",
+						"lastName": "Samuel",
+						"identifier": 123455,
+						"state": "MD",
+						"age": 21,
+						"collegeStatus": "FullTime",
+						"familyIncome": 76000
+					}
+				},
+				"return-object": false,
+				"disconnected": false
+			}
+		},
+		{
+			"fire-all-rules": {
+				
+			}
+		},
+		{
+			"query": {
+				"name": "Query LoanAmount",
+				"out-identifier": "result"
+			}
+		}
+	]
+}
