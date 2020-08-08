@@ -1,0 +1,17 @@
+/bin/
+/build/
+/.gradle/
+**.settings/
+/.vscode/
+/.sts4-cache/
+**/target/**
+**.factorypath
+.project
+.classpath
+.DS_Store
+/tmp
+output.json
+.git
+.*.html
+.cucumber
+/.metadata/

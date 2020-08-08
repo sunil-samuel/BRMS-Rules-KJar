@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sunilsamuel.brms.rules</groupId>
@@ -6,12 +7,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>kjar</packaging>
 
-
 	<properties>
-		<kie.version>6.4.0.Final-redhat-8</kie.version>
-		<cucumber.version>1.2.5</cucumber.version>
-		<codehaus.jackson.version>1.9.13</codehaus.jackson.version>
-		<javaassist.version>3.19.0-GA</javaassist.version>
+		<!-- RHDM 7.7.1 -->
+		<kie.version>7.33.0.Final-redhat-00003</kie.version>
+
+		<!-- Cucumber -->
+		<cucumber.version>5.5.0</cucumber.version>
+
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
@@ -19,66 +21,61 @@
 		<name>Sunil Samuel</name>
 	</organization>
 
+	<dependencyManagement>
+		<!-- https://mvnrepository.com/artifact/org.kie/kie-bom -->
+		<dependencies>
+			<dependency>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-bom</artifactId>
+				<version>${kie.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
+		<!-- K I E - D E P E N D E N C I E S -->
+		<!-- kie-continuous integration (ci) -->
 		<dependency>
 			<groupId>org.kie</groupId>
-			<artifactId>kie-api</artifactId>
+			<artifactId>kie-ci</artifactId>
+			<version>${kie.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-bpmn2</artifactId>
+			<version>${kie.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-test</artifactId>
 			<version>${kie.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- C U C U M B E R - D E P E N D E N C I E S -->
+		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
 		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-core</artifactId>
-			<version>${kie.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-compiler</artifactId>
-			<version>${kie.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>info.cukes</groupId>
+			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
 			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
 		<dependency>
-			<groupId>info.cukes</groupId>
+			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-junit</artifactId>
 			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.kie.server</groupId>
-			<artifactId>kie-server-client</artifactId>
-			<version>${kie.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>${javaassist.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl -->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
-			<version>${codehaus.jackson.version}</version>
-		</dependency>
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.kie</groupId>
-				<artifactId>kie-maven-plugin</artifactId>
-				<version>${kie.version}</version>
-				<extensions>true</extensions>
-			</plugin>
-		</plugins>
 		<!-- This pluginManagement is used to fix the following Eclipse error: -->
 		<!-- Plugin execution not covered by lifecycle configuration: org.kie:kie-maven-plugin:xxx.Final:build 
 			(execution: default-build, phase: compile) -->
@@ -87,7 +84,7 @@
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
+					<version>${version.maven.m2e}</version>
 					<configuration>
 						<lifecycleMappingMetadata>
 							<pluginExecutions>
@@ -95,7 +92,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.kie</groupId>
 										<artifactId>kie-maven-plugin</artifactId>
-										<versionRange>[6.0.0,)</versionRange>
+										<versionRange>(6.0.0,]</versionRange>
 										<goals>
 											<goal>build</goal>
 											<goal>compile</goal>
@@ -110,8 +107,23 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+				<!-- Maven plugin for packaging as kjar -->
+				<plugin>
+					<groupId>org.kie</groupId>
+					<artifactId>kie-maven-plugin</artifactId>
+					<version>${kie.version}</version>
+					<extensions>true</extensions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<!-- Maven plugin for packaging as kjar -->
+			<plugin>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-maven-plugin</artifactId>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
 	</build>
 
 </project>
