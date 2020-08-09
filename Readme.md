@@ -15,6 +15,8 @@ This project is a sample BRMS (Drools) project that can be used to deploy into t
 
 This sample BRMS (Drools) project can be used as a starting point for your own requirements and to be extended to support your criteria.  This application uses Cucumber to test the BRMS (Drools) engine and to run as JUnit or Maven tests.
 
+The `KieRequestTest.java` is a sample java code that illustrates how to communicate with the kie-server and send JSON requests with commands to execute rules against.
+
 The `RulesEngineSupport.java` is a re-usable generic code that can help to test your DRL rules.  The application is written with the assumption that you have some understanding of the Drools engine and the Kie Server.  There is another Github application that is created to describe the deployment of this kjar into the kie server.  See the following project:
 
 ```

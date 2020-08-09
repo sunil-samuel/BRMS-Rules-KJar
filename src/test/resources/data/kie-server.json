@@ -60,7 +60,7 @@
 		{
 			"query": {
 				"name": "Query LoanAmount",
-				"out-identifier": "result"
+				"out-identifier": "loanAmounts"
 			}
 		}
 	]

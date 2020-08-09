@@ -9,14 +9,15 @@
 
 	<properties>
 		<!-- RHDM 7.7.1 -->
-<!-- 		<kie.version>7.33.0.Final-redhat-00003</kie.version> -->
-		
+		<!-- <kie.version>7.33.0.Final-redhat-00003</kie.version> -->
+
 		<!-- RHDM 7.3.1 -->
 		<kie.version>7.18.0.Final-redhat-00004</kie.version>
 
 		<!-- Cucumber -->
 		<cucumber.version>5.5.0</cucumber.version>
 
+		<version.maven.m2e>1.0.0</version.maven.m2e>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
@@ -44,6 +45,13 @@
 			<groupId>org.kie</groupId>
 			<artifactId>kie-ci</artifactId>
 			<version>${kie.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.kie/kie-server-client -->
+		<dependency>
+			<groupId>org.kie.server</groupId>
+			<artifactId>kie-server-client</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
@@ -100,6 +108,8 @@
 											<goal>build</goal>
 											<goal>compile</goal>
 											<goal>injectreactive</goal>
+											<goal>generateModel</goal>
+											<goal>generateDMNModel</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
