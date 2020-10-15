@@ -32,7 +32,7 @@ import com.sunilsamuel.brms.model.UserInformation;
  * 
  *
  */
-@Ignore
+//@Ignore
 public class KieRequestTest {
 
 	private static final String KIE_SERVER_URL = "http://localhost:8080/kie-server/services/rest/server";
@@ -87,7 +87,7 @@ public class KieRequestTest {
 		/**
 		 * Insert the command to get 'query' after the rule is run using an identifier.
 		 */
-		commands.add(commandFactory.newQuery("loanAmounts", "Query LoanAmount"));
+		commands.add(commandFactory.newQuery("loanAmount", "Query LoanAmount"));
 		/**
 		 * Create the batch commands using the kie session information.
 		 */
@@ -101,17 +101,9 @@ public class KieRequestTest {
 
 		ExecutionResults results = response.getResult();
 
-		// We can retrieve the objects from the response using the identifiers we
-		// specified in the Insert commands.
-		// List<LoanAmount> loanAmounts = (List<LoanAmount>)
-		// results.getValue("loanAmounts");
-		QueryResults loanAmounts = (QueryResults) results.getValue("loanAmounts");
-		Iterator<QueryResultsRow> it = loanAmounts.iterator();
-		while (it.hasNext()) {
-			QueryResultsRow value = it.next();
-			List<LoanAmount> values = (List<LoanAmount>) value.get("loanAmount");
-			System.out.println("VALUE [" + values + "]");
-		}
+		QueryResults loanAmount = (QueryResults) results.getValue("loanAmount");
+		List<LoanAmount> values = (List<LoanAmount>) loanAmount.iterator().next().get("loanAmount");
+		System.out.println(values);
 	}
 
 	public UserInformation get(String first, String last, long id, String state, int age, CollegeStatus status,
